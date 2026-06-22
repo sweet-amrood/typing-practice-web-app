@@ -24,8 +24,34 @@ const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT || 5000;
 
+const DEFAULT_CLIENT_ORIGINS = [
+  'http://localhost:5173',
+  'https://typing-learning.netlify.app',
+];
+
+const parseOrigins = (value) =>
+  value
+    ?.split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean) ?? [];
+
+const allowedOrigins = [
+  ...new Set([
+    ...DEFAULT_CLIENT_ORIGINS,
+    ...parseOrigins(process.env.CLIENT_URL),
+    ...parseOrigins(process.env.CLIENT_URLS),
+  ]),
+];
+
 const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin ?? true);
+      return;
+    }
+
+    callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -59,7 +85,12 @@ app.use(notFound);
 app.use(errorHandler);
 
 const io = new Server(httpServer, {
-  cors: corsOptions,
+  cors: {
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  },
 });
 
 io.use(authenticateSocket);
