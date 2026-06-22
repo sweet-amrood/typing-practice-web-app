@@ -1,0 +1,145 @@
+/* Typing-themed animations */
+
+@keyframes blink-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes float-key {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--key-rotate, 0deg));
+  }
+  50% {
+    transform: translateY(-12px) rotate(calc(var(--key-rotate, 0deg) + 3deg));
+  }
+}
+
+@keyframes key-press {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--theme-accent) 40%, transparent);
+  }
+  50% {
+    transform: translateY(3px) scale(0.96);
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--theme-accent) 40%, transparent);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide-up-fade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ticker-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wpm-tick {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--theme-accent);
+  animation: blink-caret 1s step-end infinite;
+}
+
+.float-key {
+  animation: float-key 4s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+.key-press-animate {
+  animation: key-press 2.5s ease-in-out infinite;
+  animation-delay: var(--press-delay, 0s);
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up-fade 0.6s ease-out both;
+}
+
+.animate-slide-up-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-slide-up-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-slide-up-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.wpm-tick {
+  animation: wpm-tick 0.15s ease-out;
+}
+
+.ticker-pop {
+  animation: ticker-pop 0.35s ease-out;
+}
+
+.typing-dot-grid {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--theme-accent) 12%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-caret,
+  .float-key,
+  .key-press-animate,
+  .pulse-glow,
+  .animate-slide-up,
+  .wpm-tick,
+  .ticker-pop {
+    animation: none !important;
+  }
+}

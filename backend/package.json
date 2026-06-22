@@ -1,0 +1,21 @@
+{
+  "name": "typing-practice-backend",
+  "version": "1.0.0",
+  "description": "Express API with MongoDB",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "grant-coins": "node scripts/grant-coins.mjs"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.9.3",
+    "socket.io": "^4.8.3"
+  }
+}

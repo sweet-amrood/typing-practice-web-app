@@ -1,0 +1,365 @@
+/* ── Shared decoration layers ── */
+
+.theme-decorations {
+  isolation: isolate;
+}
+
+.theme-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgb(0 0 0 / 0.14) 2px,
+    rgb(0 0 0 / 0.14) 4px
+  );
+}
+
+.theme-crt-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0) 0px,
+    rgb(0 0 0 / 0) 2px,
+    rgb(0 0 0 / 0.22) 3px,
+    rgb(0 0 0 / 0.22) 4px
+  );
+}
+
+.theme-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 45%,
+    rgb(0 0 0 / 0.55) 100%
+  );
+}
+
+/* ── Cyberpunk ── */
+
+@keyframes cyber-flicker {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  92% {
+    opacity: 0.85;
+  }
+  93% {
+    opacity: 0.4;
+  }
+  94% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes cyber-neon-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    filter: blur(0);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(1px);
+  }
+}
+
+@keyframes cyber-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.cyber-neon-line {
+  animation: cyber-neon-pulse 2.8s ease-in-out infinite;
+}
+
+.cyber-glitch-bar {
+  animation: cyber-slide 6s linear infinite;
+}
+
+body[data-theme='cyberpunk'] .typing-caret {
+  background: linear-gradient(180deg, #ff2a6d, #05d9e8);
+  box-shadow: 0 0 8px #ff2a6d, 0 0 14px #05d9e8;
+}
+
+body[data-theme='cyberpunk'] header {
+  border-bottom-color: #ff2a6d66;
+  box-shadow:
+    0 1px 0 #05d9e833,
+    0 0 40px rgb(255 42 109 / 0.08);
+}
+
+body[data-theme='cyberpunk'] .rounded-xl.border,
+body[data-theme='cyberpunk'] .rounded-lg.border,
+body[data-theme='cyberpunk'] .rounded-2xl.border {
+  box-shadow:
+    inset 0 0 30px rgb(5 217 232 / 0.03),
+    0 0 24px rgb(255 42 109 / 0.06);
+}
+
+/* ── Matrix ── */
+
+body[data-theme='matrix'] .typing-caret {
+  background: #00ff41;
+  box-shadow: 0 0 10px #00ff41;
+}
+
+body[data-theme='matrix'] header {
+  box-shadow: 0 0 30px rgb(0 255 65 / 0.06);
+}
+
+body[data-theme='matrix'] .rounded-xl.border,
+body[data-theme='matrix'] .rounded-lg.border {
+  box-shadow: inset 0 0 20px rgb(0 255 65 / 0.04);
+}
+
+/* ── Retro CRT ── */
+
+@keyframes crt-flicker {
+  0%,
+  100% {
+    opacity: 0.97;
+  }
+  50% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.92;
+  }
+}
+
+@keyframes phosphor-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 6px rgb(51 255 51 / 0.35);
+  }
+  50% {
+    text-shadow: 0 0 14px rgb(51 255 51 / 0.55);
+  }
+}
+
+.retro-crt-overlay {
+  animation: crt-flicker 4s step-end infinite;
+}
+
+body[data-theme='retro'] {
+  letter-spacing: 0.02em;
+}
+
+body[data-theme='retro'] h1,
+body[data-theme='retro'] h2,
+body[data-theme='retro'] h3,
+body[data-theme='retro'] .text-theme-accent {
+  animation: phosphor-glow 3s ease-in-out infinite;
+}
+
+body[data-theme='retro'] .rounded-xl,
+body[data-theme='retro'] .rounded-lg,
+body[data-theme='retro'] .rounded-2xl {
+  border-radius: 4px !important;
+}
+
+body[data-theme='retro'] .rounded-xl.border,
+body[data-theme='retro'] .rounded-lg.border {
+  box-shadow:
+    inset 0 0 50px rgb(51 255 51 / 0.05),
+    0 0 18px rgb(51 255 51 / 0.08);
+}
+
+body[data-theme='retro'] .typing-caret {
+  width: 0.55em;
+  background: #33ff33;
+  box-shadow: 0 0 12px #33ff33;
+}
+
+body[data-theme='retro'] header {
+  border-radius: 0;
+  font-family: var(--theme-font);
+}
+
+/* ── Ocean ── */
+
+@keyframes wave-drift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.15);
+    opacity: 0;
+  }
+}
+
+.ocean-wave-layer {
+  animation: wave-drift 18s linear infinite;
+}
+
+.ocean-bubble {
+  animation: bubble-rise var(--bubble-duration, 12s) ease-in infinite;
+  animation-delay: var(--bubble-delay, 0s);
+}
+
+body[data-theme='ocean'] .typing-caret {
+  background: #2dd4bf;
+  box-shadow: 0 0 10px #2dd4bf;
+}
+
+body[data-theme='ocean'] .rounded-xl.border,
+body[data-theme='ocean'] .rounded-lg.border {
+  box-shadow: 0 8px 32px rgb(45 212 191 / 0.08);
+  backdrop-filter: blur(4px);
+}
+
+/* ── Purple Neon ── */
+
+@keyframes neon-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes neon-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.neon-sparkle {
+  animation: neon-twinkle var(--sparkle-duration, 3s) ease-in-out infinite;
+  animation-delay: var(--sparkle-delay, 0s);
+}
+
+.neon-orb {
+  animation: neon-glow-pulse 4s ease-in-out infinite;
+}
+
+body[data-theme='purple-neon'] .typing-caret {
+  background: #c084fc;
+  box-shadow: 0 0 12px #a855f7, 0 0 20px #6366f1;
+}
+
+body[data-theme='purple-neon'] .rounded-xl.border,
+body[data-theme='purple-neon'] .rounded-lg.border {
+  box-shadow:
+    0 0 30px rgb(168 85 247 / 0.1),
+    inset 0 0 40px rgb(99 102 241 / 0.04);
+}
+
+body[data-theme='purple-neon'] header {
+  box-shadow: 0 0 50px rgb(168 85 247 / 0.12);
+}
+
+/* ── Dark (default) ── */
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.dark-star {
+  animation: star-twinkle var(--star-duration, 4s) ease-in-out infinite;
+  animation-delay: var(--star-delay, 0s);
+}
+
+body[data-theme='dark'] .rounded-xl.border,
+body[data-theme='dark'] .rounded-lg.border,
+body:not([data-theme]) .rounded-xl.border,
+body:not([data-theme]) .rounded-lg.border {
+  box-shadow: 0 4px 24px rgb(99 102 241 / 0.04);
+}
+
+/* ── Theme fonts (headings + body) ── */
+
+body[data-theme='dark'],
+body:not([data-theme]) {
+  --theme-font: 'Space Grotesk', system-ui, sans-serif;
+  --theme-font-display: 'Space Grotesk', system-ui, sans-serif;
+  font-family: var(--theme-font);
+}
+
+body[data-theme='cyberpunk'] {
+  --theme-font: 'Rajdhani', system-ui, sans-serif;
+  --theme-font-display: 'Orbitron', 'Rajdhani', sans-serif;
+  font-family: var(--theme-font);
+}
+
+body[data-theme='matrix'] {
+  --theme-font: 'Share Tech Mono', 'Courier New', monospace;
+  --theme-font-display: 'Share Tech Mono', monospace;
+  font-family: var(--theme-font);
+}
+
+body[data-theme='retro'] {
+  --theme-font: 'VT323', 'Courier New', monospace;
+  --theme-font-display: 'VT323', monospace;
+  font-family: var(--theme-font);
+  font-size: 1.125rem;
+}
+
+body[data-theme='ocean'] {
+  --theme-font: 'DM Sans', system-ui, sans-serif;
+  --theme-font-display: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--theme-font);
+}
+
+body[data-theme='purple-neon'] {
+  --theme-font: 'Exo 2', system-ui, sans-serif;
+  --theme-font-display: 'Orbitron', 'Exo 2', sans-serif;
+  font-family: var(--theme-font);
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--theme-font-display, var(--theme-font, inherit));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cyber-neon-line,
+  .cyber-glitch-bar,
+  .retro-crt-overlay,
+  .ocean-wave-layer,
+  .ocean-bubble,
+  .neon-sparkle,
+  .neon-orb,
+  .dark-star,
+  body[data-theme='retro'] h1,
+  body[data-theme='retro'] h2,
+  body[data-theme='retro'] h3,
+  body[data-theme='retro'] .text-theme-accent {
+    animation: none !important;
+  }
+}
