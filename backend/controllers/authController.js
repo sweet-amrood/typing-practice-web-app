@@ -146,8 +146,8 @@ export const updateProfile = async (req, res) => {
 
     const updates = {};
 
-    if (username) updates.username = username;
-    if (email) updates.email = email;
+    if (username) updates.username = username.trim();
+    if (email) updates.email = email.trim().toLowerCase();
     if (typingPreferences !== undefined) {
       updates.typingPreferences = formatTypingPreferences({
         ...formatTypingPreferences(req.user.typingPreferences),
@@ -160,23 +160,34 @@ export const updateProfile = async (req, res) => {
       });
     }
 
-    const duplicate = await User.findOne({
-      _id: { $ne: req.user._id },
-      $or: [
-        ...(updates.username ? [{ username: updates.username }] : []),
-        ...(updates.email ? [{ email: updates.email }] : []),
-      ],
-    });
+    const usernameChanged =
+      updates.username && updates.username !== req.user.username;
+    const emailChanged = updates.email && updates.email !== req.user.email;
 
-    if (duplicate) {
-      const field =
-        duplicate.username === updates.username ? 'username' : 'email';
-
-      return res.status(409).json({
-        success: false,
-        message: `A user with this ${field} already exists`,
+    if (usernameChanged || emailChanged) {
+      const duplicate = await User.findOne({
+        _id: { $ne: req.user._id },
+        $or: [
+          ...(usernameChanged ? [{ username: updates.username }] : []),
+          ...(emailChanged ? [{ email: updates.email }] : []),
+        ],
       });
+
+      if (duplicate) {
+        const field =
+          usernameChanged && duplicate.username === updates.username
+            ? 'username'
+            : 'email';
+
+        return res.status(409).json({
+          success: false,
+          message: `A user with this ${field} already exists`,
+        });
+      }
     }
+
+    if (!usernameChanged) delete updates.username;
+    if (!emailChanged) delete updates.email;
 
     const user = await User.findByIdAndUpdate(req.user._id, updates, {
       new: true,

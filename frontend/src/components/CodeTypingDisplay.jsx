@@ -53,7 +53,7 @@ const CodeTypingDisplay = ({ text, input, syntaxClasses = [] }) => {
           stateClass = `${resolveSyntaxColor(classes[index] ?? 'token-plain')} underline decoration-theme-accent decoration-2`;
         }
 
-        const displayChar = isWrong ? typedChar : expectedChar;
+        const displayChar = expectedChar;
 
         return (
           <span

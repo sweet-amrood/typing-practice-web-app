@@ -30,7 +30,7 @@ const renderCharSpan = ({
     className = 'text-theme-text-secondary';
   }
 
-  const displayChar = isWrong ? typedChar : expectedChar;
+  const displayChar = expectedChar;
 
   return (
     <span
